@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 23:30:55 by tango             #+#    #+#             */
-/*   Updated: 2020/01/19 16:20:07 by tango            ###   ########.fr       */
+/*   Updated: 2020/01/19 16:52:26 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			check_opt(char *opt)
 	return (0);
 }	
 
-char		**validate(char **chnk, int len, char **opt)
+int			validate(char **chnk, int len, char **opt, char ***files)
 {
 	int i;
 
@@ -55,7 +55,6 @@ char		**validate(char **chnk, int len, char **opt)
 	if (opt[0][0] == '\0')
 		ft_strdel(opt);
 	if (chnk[i] != NULL)
-		return (&chnk[i]);
-	else
-		return (NULL);
+		*files = &chnk[i];
+	return (len - i);
 }

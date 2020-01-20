@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.c                                            :+:      :+:    :+:   */
+/*   print_ls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/18 17:20:10 by tango             #+#    #+#             */
-/*   Updated: 2020/01/19 18:05:43 by tango            ###   ########.fr       */
+/*   Created: 2020/01/19 17:07:32 by tango             #+#    #+#             */
+/*   Updated: 2020/01/19 18:06:01 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		main(int ac, char **chnk)
+int			dist_file_dir(char *path)
 {
-	char *opt;
-	char **paths;
-	int	nb;
-
-	opt = NULL;
-	paths = NULL;
-	nb = 0;
-	if (ac != 1)
+	if (errno == 20)
 	{
-		chnk++;
-		nb = validate(chnk, ac, &opt, &paths);
-	}
-//	print_ls(paths, opt, nb);
-	return (0);
+		errno = 0;
+		
+
+void		print_ls(char **paths, char *opt, int nb)
+{
+	
+
 }

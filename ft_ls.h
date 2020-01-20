@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 17:24:10 by tango             #+#    #+#             */
-/*   Updated: 2020/01/19 15:33:07 by tango            ###   ########.fr       */
+/*   Updated: 2020/01/19 17:08:12 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "./libft/libft.h"
 
 void	usage_error(char *error);
-char	**validate(char **chnk, int len, char **opt);
+int		validate(char **chnk, int len, char **opt, char ***files);
+void	print_ls(char **files, char *opt, int count);
 
 #endif
