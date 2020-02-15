@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:24:59 by tango             #+#    #+#             */
-/*   Updated: 2020/02/14 19:39:51 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/15 18:49:21 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,13 @@ char		get_mode(struct stat sb)
 		return ('b');
 }
 
-void		permission(char perm_board[12], struct stat sb)
+void		permission(char **perm_board, struct stat sb)
 {
 	unsigned short flag;
 	int i;
 
-	perm_board[0] = get_mode(sb);
+	*perm_board = (char*)malloc(sizeof(char) * 12);
+	perm_board[0][0] = get_mode(sb);
 	i = 0;
 	flag = 0400;
 	while (++i < 10)
@@ -147,18 +148,18 @@ void		permission(char perm_board[12], struct stat sb)
 		if ((sb.st_mode & 0777) & flag)
 		{
 			if (i % 3 == 1)
-				perm_board[i] = 'r';
+				perm_board[0][i] = 'r';
 			else if (i % 3 == 2)
-				perm_board[i] = 'w';
+				perm_board[0][i] = 'w';
 			else
-				perm_board[i] = 'x';
+				perm_board[0][i] = 'x';
 		}
 		else
-			perm_board[i] = '-';
+			perm_board[0][i] = '-';
 		flag >>= 1;
 	}
-	perm_board[i] = ' ';
-	perm_board[++i] = '\0';
+	perm_board[0][i] = ' ';
+	perm_board[0][++i] = '\0';
 }
 
 int			cal_total(struct stat sb)
@@ -234,15 +235,17 @@ char		*get_link(char *file, char *dir, char **dot, char **link_board)
 int			make_lines1(char *file, char *dir, char *app_l, t_len lens)
 {
 	struct stat sb;
-	char	perm_board[12];
-	char	*link_board;
+	//char	*perm_board;
+	char	*reuse_board;
+	//char	*link_board;
 	char	*dot;
 	int	total;
 
 	total = 0;
 	dir ? get_sb(file, dir, &sb, &dot) : lstat(file, &sb);
-	permission(perm_board, sb);
-	app_l = ft_strcat(app_l, perm_board);
+	permission(&reuse_board, sb);
+	app_l = ft_strcat(app_l, reuse_board);
+	ft_strdel(&reuse_board);
 	app_l = ft_strcat(app_l, " ");
 	app_l = ft_strcat(app_l, make_w(lens.link, get_len_num(sb.st_nlink)));
 	total += make_line2(sb, app_l, lens, total);
@@ -250,8 +253,8 @@ int			make_lines1(char *file, char *dir, char *app_l, t_len lens)
 	if ((sb.st_mode & S_IFLNK) == S_IFLNK)
 	{
 		app_l = ft_strcat(app_l, " -> ");
-		app_l = ft_strcat(app_l, get_link(file, dir, &dot, &link_board));
-		ft_strdel(&link_board);
+		app_l = ft_strcat(app_l, get_link(file, dir, &dot, &reuse_board));
+		ft_strdel(&reuse_board);
 	}
 	app_l = ft_strcat(app_l, "\0");	
 	return (total);
@@ -275,6 +278,7 @@ void		clean_lens(t_len *lens)
 void				add_total(t_l *l, t_len len)
 {
 	unsigned long	i;
+	char			*total;
 
 	i = -1;
 	
@@ -282,8 +286,10 @@ void				add_total(t_l *l, t_len len)
 		l->app_l[0][i] = '\0';
 	if (l->nb)
 	{
+		total = ft_itoa(l->total);
 		l->app_l[0] = ft_strcat(l->app_l[0], "total ");
-		l->app_l[0] = ft_strcat(l->app_l[0], ft_itoa(l->total));
+		l->app_l[0] = ft_strcat(l->app_l[0], total);
+		ft_strdel(&total);
 	}
 }
 

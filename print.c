@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 17:07:32 by tango             #+#    #+#             */
-/*   Updated: 2020/02/14 20:50:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/15 19:11:23 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ void		print_dirs(char *opt, t_dirs *ds)
 				while ((dir = readdir(dirp)))
 					if (!shaping_dirs(ds->dirs[0], dir, opt, ds))
 						dec_depth(ds->dirs[0], ds, opt);
+				closedir(dirp);
 				if (ds->depth)
 					return ;
 			}
