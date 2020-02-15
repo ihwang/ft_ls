@@ -81,5 +81,5 @@ void				l_add_info(t_files *fs, t_l *l, char *dir);
 void				strlst_del(char ***target, int nb);
 void				no_dirs(t_dirs *ds);
 void				print_dirs(char *opt, t_dirs *ds);
-
+void				init_dirp(DIR **dirp);
 #endif

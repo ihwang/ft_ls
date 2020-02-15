@@ -190,6 +190,12 @@ void		cut_dir(t_dirs *ds)
 	ds->nb--;
 }
 
+void		init_dirp(DIR **dirp)
+{
+	closedir(*dirp);
+	*dirp = NULL;
+}
+
 void		print_dirs(char *opt, t_dirs *ds)
 {
 	DIR		*dirp;
@@ -209,11 +215,11 @@ void		print_dirs(char *opt, t_dirs *ds)
 				while ((dir = readdir(dirp)))
 					if (!shaping_dirs(ds->dirs[0], dir, opt, ds))
 						dec_depth(ds->dirs[0], ds, opt);
-				closedir(dirp);
+				init_dirp(&dirp);
 				if (ds->depth)
 					return ;
 			}
-			closedir(dirp);
+			dirp ? init_dirp(&dirp) : 0;
 		}
 		cut_dir(ds);
 	}
@@ -246,5 +252,5 @@ void		ft_ls(char **paths, char *opt, int nb)
 	//fs.files ? strlst_del(&fs.files, fs.nb) : 0;
 	ds.dirs ? strlst_del(&ds.dirs, ds.nb) : 0;
 	opt ? ft_strdel(&opt) : 0;
-//	while (1);
+	while (1);
 }
