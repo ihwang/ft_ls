@@ -11,15 +11,14 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-//working on this function!!!!!!!!!!!!!!
-void		print(char **target, int nb, t_l *l)
+
+void		print(char **target, int nb/*, t_l *l*/)
 {
 	int i;
 
 	i = -1;
-	if (l)
-		if (nb != l->nb)
-			ft_strdel(&total);
+	//if (l->type == 'd')
+	//		ft_strdel(&total);
 	while (++i < nb)
 	{
 		ft_putstr(target[i]);
@@ -33,6 +32,7 @@ void		clean_l(t_l *l)
 	l->app_l = NULL;
 	l->nb = 0;
 	l->total = 0;
+//	l->type = 'f';
 }
 
 void		apply_print(char *opt, t_files *fs, char *dir, t_dirs *ds)
@@ -173,35 +173,6 @@ void		dec_depth(char *dir, t_dirs *ds, char* opt)
 	ds->depth--;
 }
 
-/*void		print_dirs(char *opt, t_dirs *ds)
-{
-	int		i;
-	DIR		*dirp;
-	struct	dirent *dir;
-	t_files	fs;
-
-	i = -1;
-	while (++i < ds->nb)
-	{
-		clean_ds_fs(NULL, &fs);
-		make_files(&fs, ds->dirs[i]);
-		(ds->nb > 1 || ds->re || ds->b) ? p_d_n(ds->dirs[i], i, ds) : 0;
-		apply_print(opt, &fs, ds->dirs[i]);
-		if ((dirp = opendir(ds->dirs[i])) && ds->re)
-		{
-			while ((dir = readdir(dirp)))
-			{
-				if (!shaping_dirs(ds->dirs[i], dir, opt, ds))
-					dec_depth(ds->dirs[i], ds, opt);
-			}
-			closedir(dirp);
-			if (ds->depth)
-				return ;
-		}
-	}
-}
-*/
-
 void		cut_dir(t_dirs *ds)
 {
 	char	**temp;
@@ -274,5 +245,5 @@ void		ft_ls(char **paths, char *opt, int nb)
 	//fs.files ? strlst_del(&fs.files, fs.nb) : 0;
 	ds.dirs ? strlst_del(&ds.dirs, ds.nb) : 0;
 	opt ? ft_strdel(&opt) : 0;
-	while (1);
+//	while (1);
 }

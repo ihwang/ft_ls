@@ -277,6 +277,7 @@ void				add_total(t_l *l, t_len len)
 	unsigned long	i;
 
 	i = -1;
+	
 	while (++i < len.sum)
 		l->app_l[0][i] = '\0';
 	if (l->nb)
@@ -291,6 +292,7 @@ void		dir_mm(t_files *fs, t_len *lens, t_l *l, char *dir)
 	int		max;
 	int		i;
 
+//	l->type = 'd';
 	i = -1;
 	max = 0;
 	l->app_l = (char**)malloc(sizeof(char*) * (l->nb + 1));
@@ -334,14 +336,12 @@ void		l_add_info(t_files *fs, t_l *l, char *dir)
 		dir_mm(fs, &lens, l, dir);
 	}
 	else
-	{
 		file_mm(fs, &lens, l);
-	}
 	i = -1;
 	while (++i < l->nb)
 		l->total += dir ? make_lines1(fs->files[i], dir, l->app_l[i + 1], lens)
 			: make_lines1(fs->files[i], dir, l->app_l[i], lens);
-	add_total(l, lens);
+	dir ? add_total(l, lens) : 0;
 	strlst_del(&fs->files, fs->nb);
 	l->nb = dir ? l->nb + 1 : l->nb;
 }

@@ -1,0 +1,9 @@
+.gitignore.swp
+.ft_ls.h.swp
+.ft_ls.c.swp
+.opt_a_l.c.swp
+.opt_sort.c.swp
+.print.c.swp
+.print_help.c.swp
+.usage_error.c.swp
+.validate.c.swp

@@ -65,6 +65,7 @@ typedef struct		s_l
 	char			**app_l;
 	int				nb;
 	int				total;
+//	char			type;
 }					t_l;
 
 void				usage_error(char *error);
