@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:24:59 by tango             #+#    #+#             */
-/*   Updated: 2020/02/15 18:49:21 by tango            ###   ########.fr       */
+/*   Updated: 2020/02/15 20:48:53 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,7 +338,7 @@ void		l_add_info(t_files *fs, t_l *l, char *dir)
 	if (dir)
 	{
 		if (!l->nb)
-			return ;
+			return (strlst_del(&fs->files, fs->nb));
 		dir_mm(fs, &lens, l, dir);
 	}
 	else

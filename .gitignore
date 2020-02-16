@@ -1,4 +1,8 @@
 .DS_Store
+ft_ls
+ft_ls.dSYM
+ft_ls.dSYM/Contents/Info.plist
+ft_ls.dSYM/Contents/Resources/DWARF/fs_ls
 .gitignore.swp
 .ft_ls.h.swp
 .ft_ls.c.swp

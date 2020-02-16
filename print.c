@@ -6,7 +6,11 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 17:07:32 by tango             #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2020/02/15 20:38:07 by tango            ###   ########.fr       */
+=======
 /*   Updated: 2020/02/15 19:51:58 by tango            ###   ########.fr       */
+>>>>>>> 4968fded2982d86b15d16c237895ef8fd7dd0b46
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +173,10 @@ void		clean_ds_fs(t_dirs *ds, t_files *fs)
 void		dec_depth(char *dir, t_dirs *ds, char* opt)
 {
 	print_dirs(opt, ds);
-	*(ft_strrchr(dir, '/')) = '\0';
+	if (*ft_strrchr(dir, '/') != dir[0])
+		*(ft_strrchr(dir, '/')) = '\0';
+	else
+		dir[1] = '\0';
 	ds->depth--;
 }
 
@@ -252,5 +259,5 @@ void		ft_ls(char **paths, char *opt, int nb)
 	//fs.files ? strlst_del(&fs.files, fs.nb) : 0;
 	ds.dirs ? strlst_del(&ds.dirs, ds.nb) : 0;
 	opt ? ft_strdel(&opt) : 0;
-	while (1);
+//	while (1);
 }
