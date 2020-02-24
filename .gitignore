@@ -1,5 +1,6 @@
 .opt_sort_a.c.swp
 include/.ft_ls.h.swp
+src/.DS_Store
 # Prerequisites
 *.d
 
