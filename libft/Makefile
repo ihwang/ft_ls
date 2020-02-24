@@ -6,13 +6,14 @@
 #    By: ihwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 19:29:47 by ihwang            #+#    #+#              #
-#    Updated: 2019/10/27 19:41:02 by ihwang           ###   ########.fr        #
+#    Updated: 2020/02/21 21:04:32 by ihwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=libft.a
 
-SRCS=ft_atoi.c ft_bzero.c ft_isalnum.c \
+SRCS=ft_itoh.c ft_nbrlen.c\
+	 ft_atoi.c ft_bzero.c ft_isalnum.c \
 	 ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
 	 ft_itoa.c ft_lstadd.c \
 	 ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c \
@@ -27,7 +28,8 @@ SRCS=ft_atoi.c ft_bzero.c ft_isalnum.c \
 	 ft_strrchr.c ft_strsplit.c ft_strsub.c \
 	 ft_strstr.c ft_strtrim.c ft_tolower.c ft_toupper.c
 
-OBJECTS=ft_atoi.o  ft_bzero.o ft_isalnum.o ft_toupper.o \
+OBJECTS=ft_itoh.o ft_nbrlen.o\
+		ft_atoi.o  ft_bzero.o ft_isalnum.o ft_toupper.o \
 		ft_isalpha.o ft_isascii.o ft_isdigit.o ft_isprint.o \
 		ft_itoa.o ft_lstadd.o \
 		ft_lstdel.o ft_lstdelone.o ft_lstiter.o ft_lstmap.o ft_lstnew.o \

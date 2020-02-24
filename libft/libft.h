@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:02:49 by ihwang            #+#    #+#             */
-/*   Updated: 2019/10/27 19:45:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/22 14:14:16 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+char				*ft_itoh(int nb);
+unsigned long		ft_nbrlen(int nb);
 void				*ft_memset(void *pt, int value, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);

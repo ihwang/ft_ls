@@ -3,82 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/18 23:30:55 by tango             #+#    #+#             */
-/*   Updated: 2020/02/14 11:42:27 by ihwang           ###   ########.fr       */
+/*   Created: 2020/02/19 19:59:40 by ihwang            #+#    #+#             */
+/*   Updated: 2020/02/23 16:10:18 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../include/ft_ls.h"
 
-void		thinout_opt(char **opt)
+static void			check_opt(unsigned long *opt, char cand)
 {
-	char *p_opt;
-	char *target;
-	
-	p_opt = *opt;
-	while (*p_opt)
-	{
-		target = p_opt + 1;
-		while (*target)
-		{
-			if (*p_opt == *target)
-				*target = *(target + 1);
-			target++;
-		}
-		p_opt++;
-	}			
+	if (cand == 'R')
+		*opt |= U_R;
+	else if (cand == 'a')
+		*opt |= L_A;
+	else if (cand == 'l')
+		*opt |= L_L;
+	else if (cand == 'r')
+		*opt |= L_R;
+	else if (cand == 't')
+		*opt |= L_T;
+	else if (cand == 'u')
+		*opt |= L_U;
+	else
+		usage_error(&cand);
 }
 
-int			get_opt(char **chnk, int len, char **opt)
+static int			get_opt(char **chnk, int len, unsigned long *opt)
 {
-	char	*tmp;
-	int		i;
+	int				i;
+	unsigned int	j;
 
 	i = -1;
 	while (++i < len)
 	{
 		if (chnk[i][0] == '-' && chnk[i][1])
 		{
-			if (*opt == NULL)
-				*opt = ft_strnew(1);
-			tmp = ft_strjoin(*opt, &chnk[i][1]);
-			ft_strdel(opt);
-			*opt = tmp;
+			j = 0;
+			while (++j < ft_strlen(chnk[i]))
+				check_opt(opt, chnk[i][j]);
 		}
 		else
-		{
 			break ;
-		}
 	}
-	if (*opt)
-		thinout_opt(opt);
 	return (i);
 }
 
-int			check_opt(char *opt)
+static int			check_path(char ***paths, int len)
 {
-	int i;
-
-	i = -1;
-	while (opt[++i])
-		if (!(opt[i] == 'R' || opt[i] == 'a' || opt[i] == 'l' ||
-			opt[i] == 'r' || opt[i] == 't'))
-			usage_error(&opt[i]);
-	return (0);
-}	
-
-int			check_path(char ***paths, int len)
-{
-	int i;
-	int j;
-	struct stat sb;
+	int				i;
+	int				j;
+	t_stat			sb;
 
 	i = -1;
 	while (++i < len)
 	{
-		if (stat((*paths)[i], &sb))
+		if (lstat((*paths)[i], &sb))
 		{
 			usage_error((*paths)[i]);
 			j = i - 1;
@@ -91,20 +72,21 @@ int			check_path(char ***paths, int len)
 			}
 			len--;
 			i--;
+			if (!len)
+				exit(1);
 		}
 	}
 	return (len);
 }
 
-int			validate(char **chnk, int len, char **opt, char ***paths)
+int					validate(char **chnk, int len, unsigned long *opt,
+		char ***paths)
 {
-	int i;
-	int res;
+	int				i;
+	int				res;
 
 	len--;
 	i = get_opt(chnk, len, opt);
-	if (i)
-		check_opt(*opt);
 	res = len - i;
 	if (res)
 	{

@@ -1,96 +1,74 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_help.c                                       :+:      :+:    :+:   */
+/*   init_extract.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/21 16:18:16 by tango             #+#    #+#             */
-/*   Updated: 2020/02/15 20:49:55 by tango            ###   ########.fr       */
+/*   Created: 2020/02/19 19:46:02 by ihwang            #+#    #+#             */
+/*   Updated: 2020/02/20 19:00:53 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../include/ft_ls.h"
 
-void	ds_del(char **dirs, int nb)
+int			check_dir(char *path)
 {
-	while (0 <= --nb)
-		ft_strdel(&(dirs[nb]));
-	free(dirs);
+	t_stat	sb;
+
+	lstat(path, &sb);
+	if ((sb.st_mode & S_IFDIR) == S_IFDIR)
+		return (1);
+	else
+		return (0);
 }
 
-void	strlst_del(char ***target, int nb)
+void		extract_dirs(t_dirs *ds, char **paths, int nb)
 {
-	while (0 <= --nb)
-		ft_strdel(&(target[0][nb]));
-	free(*target);
-	*target = NULL;
-	//need to be fixed later
-}
-
-void	no_dirs(t_dirs *ds)
-{
-	ds->dirs = (char**)malloc(sizeof(char*) * 1);
-	ds->dirs[0] = (char*)malloc(sizeof(char) * PATH_MAX);
-	ds->dirs[0] = ft_strcat(ds->dirs[0], ".");
-	ds->nb = 1;
-}
-
-void			extract_dirs(t_dirs *ds, char **paths, int nb)
-{
-	int 		i;
-	int 		j;
-	DIR			*dirp;
+	int		i;
+	int		j;
 
 	i = -1;
 	while (++i < nb)
-		if ((dirp = opendir(paths[i])))
-		{
-			closedir(dirp);
+		if (check_dir(paths[i]))
 			ds->nb++;
-		}
 	if (ds->nb == 0)
 		return ;
 	ds->dirs = (char**)malloc(sizeof(char*) * ds->nb);
 	i = -1;
 	j = -1;
 	while (++i < nb)
-		if ((dirp = opendir(paths[i])))
+		if (check_dir(paths[i]))
 		{
 			if (ft_strlen(paths[i]) > NAME_MAX)
 				usage_error(paths[i]);
 			ds->dirs[++j] = (char*)malloc(sizeof(char) * PATH_MAX);
+			ds->dirs[j][0] = '\0';
 			ds->dirs[j] = ft_strcat(ds->dirs[j], paths[i]);
-			closedir(dirp);
 		}
-	//while (1);
 }
 
-void			extract_files(t_files *fs, char **paths, int nb)
+void		extract_files(t_files *fs, char **paths, int nb)
 {
-	int			i;
-	int			j;
-	DIR			*dirp;
+	int		i;
+	int		j;
 
 	i = -1;
 	while (++i < nb)
-	{
-		if (!(dirp = opendir(paths[i])))
+		if (!check_dir(paths[i]))
 			fs->nb++;
-		else
-			closedir(dirp);
-	}	
 	if (fs->nb == 0)
 		return ;
 	fs->files = (char**)malloc(sizeof(char*) * fs->nb);
 	i = -1;
 	j = -1;
 	while (++i < nb)
-		if (!opendir(paths[i]))
+		if (!check_dir(paths[i]))
 		{
 			if (ft_strlen(paths[i]) > NAME_MAX)
 				usage_error(paths[i]);
 			fs->files[++j] = (char*)malloc(NAME_MAX);
+			fs->files[j][0] = '\0';
 			fs->files[j] = ft_strcat(fs->files[j], paths[i]);
 		}
 }

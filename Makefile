@@ -1,14 +1,47 @@
 NAME = ft_ls
 
-SRC = ft_ls.c opt_a_l.c opt_sort.c print.c print_help.c usage_error.c validate.c libft/libft.a
+SRCS_PATH = src/
+LIBFT_PATH = libft/
 
-HEADER = ft_ls.h
+FLAGS = -Wall -Werror -Wextra
+INC = -I ./includes/ -I ./$(LIBFT_PATH)
+
+SRCS_NAME = ft_ls.c \
+	 		extract.c \
+			make_lines.c \
+			measure_l.c \
+			opt_l.c \
+			opt_sort_a.c \
+			opt_u.c \
+			permission.c \
+			print.c \
+			recursion.c \
+			usage_error.c \
+			util_clean.c \
+			util_etc.c \
+			util_etc2.c \
+			util_print.c \
+			validate.c
+
+SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
+OBJS = $(SRCS_NAME:.c=.o)
+
+.PHONY: all, clean, fclean, re
+
+all: $(NAME)
 
 $(NAME):
-	gcc -Wall -Wextra -Werror -o $(NAME) -g $(SRC)
+	make -C $(LIBFT_PATH)
+	gcc -c $(FLAGS) $(INC) $(SRCS)
+	gcc $(FLAGS) -g $(OBJS) $(INC) -L $(LIBFT_PATH) -lft -o $(NAME)
 
-fclean:
-	rm -rf ft_ls ft_ls.dSYM
+clean:
+	make -C $(LIBFT_PATH) clean
+	/bin/rm -rf $(OBJS)
 
-re: fclean
-	make
+fclean: clean
+	make -C $(LIBFT_PATH) fclean
+	/bin/rm -rf $(NAME)
+
+re: fclean all
+

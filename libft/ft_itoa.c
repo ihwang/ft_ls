@@ -6,73 +6,46 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 14:50:27 by ihwang            #+#    #+#             */
-/*   Updated: 2019/10/27 15:48:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/22 15:26:37 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	cal_digit(int n)
+static void		init_str(char *str, size_t n_size)
 {
-	int result;
+	size_t		i;
 
-	result = 1;
-	if (!n)
-		return (result);
-	while (n)
-	{
-		n /= 10;
-		result++;
-	}
-	return (--result);
+	i = -1;
+	while (++i < n_size)
+		str[i] = '\0';
 }
 
-static char	*assign_a(int n, char *c_fresh)
+char	*ft_itoa(int n)
 {
-	int		limitation_flag;
-	char	*limitation_pt;
+	size_t	i;
+	size_t	n_size;
+	char	*str;
 
-	limitation_flag = 0;
-	*c_fresh-- = '\0';
-	limitation_pt = c_fresh;
-	if (!n)
-	{
-		*c_fresh = '0';
-		return (c_fresh);
-	}
-	else if (n == -2147483648)
-	{
-		n += 1;
-		n *= -1;
-		limitation_flag = 1;
-	}
-	while (n)
-	{
-		*c_fresh-- = (n % 10) + 48;
-		n = n / 10;
-	}
-	*limitation_pt = limitation_flag ? '8' : *limitation_pt;
-	return (c_fresh);
-}
-
-char		*ft_itoa(int n)
-{
-	char	*fresh;
-	char	*c_fresh;
-	int		neg_flag;
-	int		digit;
-
-	neg_flag = 1;
-	digit = cal_digit(n);
+	i = 0;
+	if (n == -2147483648)
+		return (strdup("-2147483648"));
+	n_size = ft_nbrlen(n);
+	str = (char *)malloc(sizeof(char) * (n_size + 1));
+	if (str == 0)
+		return (0);
+	init_str(str, n_size);
+	str[n_size] = 0;
 	if (n < 0)
 	{
-		n = n != -2147483648 ? n * -1 : n;
-		neg_flag = -1;
-		digit++;
+		str[0] = '-';
+		n *= -1;
+		i += 1;
 	}
-	fresh = (char*)malloc(sizeof(char) * digit + 1);
-	c_fresh = fresh + digit;
-	c_fresh = assign_a(n, c_fresh);
-	*c_fresh = neg_flag == -1 ? '-' : *c_fresh;
-	return (fresh);
+	while (i < n_size--)
+	{
+		str[n_size] = (n % 10) + '0';
+		n /= 10;
+	}
+	return (str);
 }

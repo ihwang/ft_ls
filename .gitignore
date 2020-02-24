@@ -1,14 +1,54 @@
-.DS_Store
-ft_ls
-ft_ls.dSYM
-ft_ls.dSYM/Contents/Info.plist
-ft_ls.dSYM/Contents/Resources/DWARF/fs_ls
-.gitignore.swp
-.ft_ls.h.swp
-.ft_ls.c.swp
-.opt_a_l.c.swp
-.opt_sort.c.swp
-.print.c.swp
-.print_help.c.swp
-.usage_error.c.swp
-.validate.c.swp
+.opt_sort_a.c.swp
+include/.ft_ls.h.swp
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf

@@ -1,78 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opt_sort.c                                         :+:      :+:    :+:   */
+/*   opt_sort_a.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:24:14 by tango             #+#    #+#             */
-/*   Updated: 2020/02/06 20:08:54 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/23 21:13:18 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "ft_ls.h"
-
-long		get_m_time(char *file)
+#include "../include/ft_ls.h"
+/*void		t_sorting(t_files *fs, char *dir)
 {
-	struct stat sb;
-
-	if (!(stat(file, &sb)))
-		return (sb.st_mtimespec.tv_sec);
-	else
-		exit(1); //need to be fixed in usage_error
-}
-
-void		t_sorting(t_files *fs)
-{
-	int i;
-	int j;
-	char *temp;
+	int		i;
+	int		j;
+	char	*temp;
 
 	i = -1;
 	while (++i < fs->nb)
 	{
 		j = -1;
-		while (++j < fs->nb)
+		while (++j < fs->nb - 1)
 		{
-			if (get_m_time(fs->files[i]) > get_m_time(fs->files[j]))
+			if (get_time(fs->files[j], dir, fs->opt) <
+					get_time(fs->files[j + 1], dir, fs->opt))
 			{
-				temp = fs->files[i];
-				fs->files[i] = fs->files[j];
-				fs->files[j] = temp;
+				temp = fs->files[j];
+				fs->files[j] = fs->files[j + 1];
+				fs->files[j + 1] = temp;
+			}
+		}
+	}
+}*/
+
+void		t_sorting(t_files *fs, char *dir)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = -1;
+	while (++i < fs->nb)
+	{
+		j = -1;
+		while (++j < fs->nb - 1)
+		{
+			if (get_time(fs->files[j], dir, fs->opt) <
+					get_time(fs->files[j + 1], dir, fs->opt))
+			{
+				temp = fs->files[j];
+				fs->files[j] = fs->files[j + 1];
+				fs->files[j + 1] = temp;
 			}
 		}
 	}
 }
-/*
-char		**t_sorting(char **files, int nb)
-{
-	int i;
-	int j;
-	char *temp;
-
-	i = -1;
-	while (++i < nb)
-	{
-		j = -1;
-		while (++j < nb)
-		{
-			if (get_m_time(files[i]) > get_m_time(files[j]))
-			{
-				temp = files[i];
-				files[i] = files[j];
-				files[j] = temp;
-			}
-		}
-	}
-	return (files);
-}*/
 
 char		**lexi_sorting(char **files, int nb)
 {
-	int i;
-	int j;
-	char *temp;
+	int		i;
+	int		j;
+	char	*temp;
 
 	i = -1;
 	while (++i < nb)
@@ -108,22 +97,24 @@ void		r_sorting(t_files *fs)
 		j--;
 	}
 }
-/*
-char		**r_sorting(char **files, int nb)
-{
-	int i;
-	int j;
-	char *temp;
 
-	i = 0;	
-	j = nb - 1;
-	while (i < nb / 2)
-	{
-		temp = files[i];
-		files[i] = files[j];
-		files[j] = temp;
-		i++;
-		j--;
-	}
-	return (files);
-}*/
+void		a_del_invi(t_files *fs)
+{
+	int		i;
+	int		len;
+	int		len_cp;
+	char	**temp;
+
+	len = -1;
+	while (++len < fs->nb)
+		if (fs->files[len][0] != '.')
+			break ;
+	temp = (char**)malloc(sizeof(char*) * (fs->nb - len));
+	i = -1;
+	len_cp = len;
+	while (len < fs->nb)
+		temp[++i] = fs->files[len++];
+	strlst_del(&fs->files, len_cp);
+	fs->files = temp;
+	fs->nb -= len_cp;
+}
