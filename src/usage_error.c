@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 23:02:53 by tango             #+#    #+#             */
-/*   Updated: 2020/02/23 16:07:59 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/24 18:15:11 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,20 @@ void		perm_check(char *dir, t_dirs *ds)
 	}
 }
 
-void		usage_error(char *error)
+static void	p_file_name(char *av0)
+{
+	char	*dot;
+
+	if (av0[0] == '/')
+		ft_putstr(av0);
+	else
+	{
+		dot = ft_strchr(av0, '/') + 1;
+		ft_putstr(dot);
+	}
+}
+
+void		usage_error(char *error, char *av0)
 {
 	if (ft_strlen(error) > NAME_MAX)
 	{
@@ -58,7 +71,8 @@ void		usage_error(char *error)
 	}
 	else if (!errno)
 	{
-		ft_putstr("ft_ls: illegal option -- ");
+		p_file_name(av0);
+		ft_putstr(": illegal option -- ");
 		ft_putchar(*error);
 		ft_putstr("\nusage: ft_ls [-Ralrtu] [file ...]\n");
 		exit(1);

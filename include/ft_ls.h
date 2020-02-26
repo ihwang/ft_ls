@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 17:24:10 by tango             #+#    #+#             */
-/*   Updated: 2020/02/23 21:12:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/24 17:57:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@
 # include <errno.h>
 # include <sys/xattr.h>
 # include "../libft/libft.h"
-
-char					*g_sorted;
 
 typedef struct dirent	t_dirent;
 typedef struct stat		t_stat;
@@ -92,7 +90,7 @@ void					make_date(t_stat sb, char *board, t_len lens);
 void					make_uid(t_stat sb, char *ap, t_len lens);
 void					make_gid(t_stat sb, char *ap, t_len lens);
 void					itox_clean(char *line, int nb, char *(itox)(int));
-void					usage_error(char *error);
+void					usage_error(char *error, char *av0);
 void					perm_check(char *dir, t_dirs *ds);
 int						check_dir(char *path);
 void					ft_ls(char **files, unsigned long opt, int count);

@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 19:59:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/23 16:10:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/24 17:58:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
 
-static void			check_opt(unsigned long *opt, char cand)
+static void			check_opt(unsigned long *opt, char cand, char *av0)
 {
 	if (cand == 'R')
 		*opt |= U_R;
@@ -27,10 +27,11 @@ static void			check_opt(unsigned long *opt, char cand)
 	else if (cand == 'u')
 		*opt |= L_U;
 	else
-		usage_error(&cand);
+		usage_error(&cand, av0);
 }
 
-static int			get_opt(char **chnk, int len, unsigned long *opt)
+static int			get_opt(char **chnk, int len, unsigned long *opt
+		, char *av0)
 {
 	int				i;
 	unsigned int	j;
@@ -42,7 +43,7 @@ static int			get_opt(char **chnk, int len, unsigned long *opt)
 		{
 			j = 0;
 			while (++j < ft_strlen(chnk[i]))
-				check_opt(opt, chnk[i][j]);
+				check_opt(opt, chnk[i][j], av0);
 		}
 		else
 			break ;
@@ -61,7 +62,7 @@ static int			check_path(char ***paths, int len)
 	{
 		if (lstat((*paths)[i], &sb))
 		{
-			usage_error((*paths)[i]);
+			usage_error((*paths)[i], NULL);
 			j = i - 1;
 			while (++j < len)
 			{
@@ -84,9 +85,12 @@ int					validate(char **chnk, int len, unsigned long *opt,
 {
 	int				i;
 	int				res;
+	char			*av0;
 
 	len--;
-	i = get_opt(chnk, len, opt);
+	av0 = chnk[0];
+	chnk++;
+	i = get_opt(chnk, len, opt, av0);
 	res = len - i;
 	if (res)
 	{

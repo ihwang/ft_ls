@@ -6,33 +6,11 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:24:14 by tango             #+#    #+#             */
-/*   Updated: 2020/02/23 21:13:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/24 17:25:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_ls.h"
-/*void		t_sorting(t_files *fs, char *dir)
-{
-	int		i;
-	int		j;
-	char	*temp;
-
-	i = -1;
-	while (++i < fs->nb)
-	{
-		j = -1;
-		while (++j < fs->nb - 1)
-		{
-			if (get_time(fs->files[j], dir, fs->opt) <
-					get_time(fs->files[j + 1], dir, fs->opt))
-			{
-				temp = fs->files[j];
-				fs->files[j] = fs->files[j + 1];
-				fs->files[j + 1] = temp;
-			}
-		}
-	}
-}*/
 
 void		t_sorting(t_files *fs, char *dir)
 {
@@ -40,20 +18,19 @@ void		t_sorting(t_files *fs, char *dir)
 	int		j;
 	char	*temp;
 
-	i = -1;
-	while (++i < fs->nb)
+	i = 1;
+	while (i < fs->nb)
 	{
-		j = -1;
-		while (++j < fs->nb - 1)
+		temp = fs->files[i];
+		j = i - 1;
+		while (j >= 0 && get_time(fs->files[j], dir, fs->opt) <
+				get_time(temp, dir, fs->opt))
 		{
-			if (get_time(fs->files[j], dir, fs->opt) <
-					get_time(fs->files[j + 1], dir, fs->opt))
-			{
-				temp = fs->files[j];
-				fs->files[j] = fs->files[j + 1];
-				fs->files[j + 1] = temp;
-			}
+			fs->files[j + 1] = fs->files[j];
+			j--;
 		}
+		fs->files[j + 1] = temp;
+		i++;
 	}
 }
 

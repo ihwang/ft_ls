@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 18:58:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/21 19:37:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/24 17:32:43 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char				*ft_itoh(int nb)
 	int				i;
 
 	hex = (char*)malloc(sizeof(char) * 11);
-	hex = strcpy(hex, "0x00000000");
+	hex = ft_strcpy(hex, "0x00000000");
 	i = 10;
 	while (nb)
 	{
