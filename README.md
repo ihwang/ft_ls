@@ -3,5 +3,5 @@
 Recoding 'ls' command in command line tool identically to basic behavior of 'ls' as one of 42 school project
 ## Installation and usage
 simply
-    make
-    ./ft_ls [-Ralrtu] [file ...]
+      make
+      ./ft_ls [-Ralrtu] [file ...]
